@@ -13,6 +13,11 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
     --red: rgb(228, 32, 43);
 }
 
+body{
+    background-color: var(--black);
+    color: var(--yellow);
+}
+
 .bg-yellow {
     background-color: var(--yellow);
 }
@@ -52,4 +57,140 @@ h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
 
 .logo {
     width: 25px;
+}
+
+/* Header */
+.header {
+    background-image: linear-gradient(rgba(0,0,0) , transparent, rgba(0,0,0)),url(https://img.itch.zone/aW1nLzMzOTQ0NzMuanBn/original/GnPPtF.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.btn-custom {
+    background-color: var(--black);
+    color: var(--yellow);
+    border-radius: 50px;
+    border: 2px solid var(--yellow);
+    margin: 0px 15px;
+    padding: 20px 30px;
+    transition: 0.5s;
+}
+
+.btn-custom:hover {
+    background-color: var(--yellow);
+    color: var(--black);
+    transform: scale(1.1);
+    
+}
+
+/* Positioned */
+.positioned {
+    position: relative;
+    top: -150px;
+}
+
+.col-custom {
+   padding: 10px;
+   border: 2px solid var(--black);
+   cursor: pointer;
+   transition: 0.5s;
+   color: var(--black);
+}
+
+.col-custom:hover {
+   transform: scale(1.1);
+   background-color: var(--black);
+   color: var(--red);
+   border-color: var(--red);
+}
+
+/* Numeri incrementali */
+.number {
+    font-size: 50px;
+    font-weight: 900px;
+    color: var(--yellow);
+}
+
+/* Swiper */
+
+.swiper {
+    height: 600px;
+}
+
+.card-review {
+  height: 250px;
+  width: 500px;
+  border: 2px solid var(--yellow);
+  border-radius: 20px;
+}
+
+.card-review:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--red);
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Pagina degli Annunci */
+
+.accordion-item {
+    background-color: var(--black);
+    color: var(--yellow);
+}
+
+.accordion-button {
+    background-color: var(--black);
+    color: var(--yellow);
+}
+
+.accordion-button:not(.collapsed){
+    color: var(--red);
+    background-color: var(--black);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.card-custom {
+    
+    width: 30%;
+    border: 2px solid var(--yellow);
+    border-radius: 20px;
+    padding: 20px;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.card-custom:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--red);
+}
+
+.img-card {
+    border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width: 600px) {
+    .positioned {
+        position: static;
+    }
 }
