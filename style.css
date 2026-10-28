@@ -183,8 +183,96 @@ body{
 }
 
 
+/* Chi siamo */
+
+.circle {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    border: 3px solid var(--yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.opener {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    border: 3px solid var(--yellow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    background-color: var(--black);
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.moved {
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    border: 3px solid var(--red);
+    position: absolute;
+    z-index: 2;
+    transition: 0.5s;
+    background-size: 100%;
+    background-position: center;
+    cursor: pointer;
+
+}
+
+.vh-75 {
+    height: 75vh;
+}
+
+.flip-card {
+    height: 400px;
+    width: 250px;
+    transition: 0.5s;
+    
+}
 
 
+.flip-card:hover > .inner {
+    transform: rotateY(180deg);
+}
+.inner {
+    border: 2px solid var(--yellow);
+    border-radius: 20px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.inner-face {
+    height: 400px;
+    width: 250px;
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.inner-back {
+    height: 400px;
+    width: 250px;
+    position: absolute;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding:15px;
+}
 
 
 
