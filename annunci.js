@@ -15,37 +15,37 @@
 
 
 fetch('./annunci.json').then((response)=> response.json()).then((data)=> {
-
+    
     data.sort((a, b) => a.price - b.price);
     
     let radioWrapper = document.querySelector('#radioWrapper');
     let cardWrapper = document.querySelector('#cardWrapper');
-
     
-
+    
+    
     function radioCreate(){
         let categories = data.map((annuncio) => annuncio.category); 
-
-
-
+        
+        
+        
         // let uniqueCategories = [];
-
+        
         // categories.forEach((category) => {
-        //     if(!uniqueCategories.includes(category)){
-
-           
+            //     if(!uniqueCategories.includes(category)){
+        
+        
         //         uniqueCategories.push(category); 
         //     }
         // });
-
-
-
-
+        
+        
+        
+        
         // Set(): Classe che mi restituisce partendo da un array un nuovo oggetto di tipo set() il quale contiene solo valori univoci che non si possono replicare
         // Array.from(): mi permette di convertire un array like in un array
-
+        
         let uniqueCategories = Array.from(new Set(categories));
-
+        
         uniqueCategories.forEach((category) => {
             let div = document.createElement('div');
             div.classList.add('form-check');
@@ -55,23 +55,23 @@ fetch('./annunci.json').then((response)=> response.json()).then((data)=> {
                                     </label>`;
             radioWrapper.appendChild(div);
         });
-
-    
+        
+        
     }
-
-
-
+    
+    
+    
     radioCreate();
-
+    
     function truncateWord(string){
-
+        
         if(string.length > 15){
             return string.split(' ') [0] + '...';
         } else{
             return string;
         }
     }
-
+    
     function showCards(array){
         cardWrapper.innerHTML = '';
         array.forEach((annuncio, i) => {
@@ -83,73 +83,93 @@ fetch('./annunci.json').then((response)=> response.json()).then((data)=> {
                     <p class="h4">${annuncio.category}</p>
                     <p class="lead">${annuncio.price} € </p>`;
             cardWrapper.appendChild(div);
+            
+            
+        });
         
-
-});
-
     }
-
+    
     showCards(data);
+    
+    
+    let radioButtons = document.querySelectorAll('.form-check-input');
+    function filterByCategory(array){
 
-
-
-function filterByCategory(categoria){
-   if(categoria!= 'All'){
-     let filtered = data.filter((annuncio) => annuncio.category == categoria);
-    showCards(filtered);
-   } else {
-       showCards(data);
-   }
-
-}
-
-let radioButtons = document.querySelectorAll('.form-check-input');
-let priceValue = document.querySelector('#priceValue');
-
-radioButtons.forEach((radio) => {
-    radio.addEventListener('click', () => {
-        filterByCategory(radio.id);
+        let arrayFromNodelist = Array.from(radioButtons);
+        let button = arrayFromNodelist.find((bottone) => bottone.checked);
+        let categoria = button.id;
+        
+        // let categoria = Array.from(radioButtons).find((bottone) => bottone.checked).id;
+        
+        if(categoria!= 'All'){
+            let filtered = array.filter((annuncio) => annuncio.category == categoria);
+            return filtered;
+        } else {
+            return array;
+        }
+        
+    }
+    
+    
+    let priceValue = document.querySelector('#priceValue');
+    
+    radioButtons.forEach((radio) => {
+        
+        radio.addEventListener('click', () => {
+            setPriceInput();
+            globalFilter();
+        });
     });
-});
+    
+    
+    let priceInput = document.querySelector('#priceInput');
+    function setPriceInput(){
+        let prices = filterByCategory(data).map((annuncio) => +annuncio.price);
+        prices.sort((a, b) => a - b);
+        let maxPrice = Math.ceil(prices.pop());
+        priceInput.max = maxPrice;
+        priceInput.value = maxPrice;
+        priceValue.innerHTML = maxPrice;
+        
+        
+        
+    }
+    
+    setPriceInput();
+    
+    function filterByPrice(array){
+        let filtered = array.filter((annuncio) => +annuncio.price <= +priceInput.value);
+        return filtered;
+    }
+    
+    priceInput.addEventListener('input', () => {
+        priceValue.innerHTML = priceInput.value;
+        globalFilter();
+        
+        
+    });
+    
+    let wordInput = document.querySelector('#wordInput');
+    
+    function filterByWord(array){
+        let filtered = array.filter((annuncio) => annuncio.name.toLowerCase().includes(wordInput.value.toLowerCase()));
+        return filtered;
+    }
+    
+    wordInput.addEventListener('input', () => {
+        globalFilter();
+    });
+    
+    // Abbiamo bisogno che ad ogni evento scattino tutte e tre le fuonzioni concatenate.
+    
+    function globalFilter(){
+        let filteredByCategory = filterByCategory(data);
+        let filteredByPrice = filterByPrice(filteredByCategory);
+        let filteredByWord = filterByWord(filteredByPrice);
 
-
-let priceInput = document.querySelector('#priceInput');
-function setPriceInput(){
-let prices = data.map((annuncio) => +annuncio.price);
-prices.sort((a, b) => a - b);
-let maxPrice = Math.ceil(prices.pop());
-priceInput.max = maxPrice;
-priceInput.value = maxPrice;
-priceValue.innerHTML = maxPrice;
-
-
-
-}
-
-setPriceInput();
-
-function filterByPrice(){
-    let filtered = data.filter((annuncio) => +annuncio.price <= +priceInput.value);
-    showCards(filtered);
-}
-
-priceInput.addEventListener('input', () => {
-    filterByPrice();
-    priceValue.innerHTML = priceInput.value;
-
-});
-
-let wordInput = document.querySelector('#wordInput');
-
-function filterByWord(parola){
-let filtered = data.filter((annuncio) => annuncio.name.toLowerCase().includes(parola.toLowerCase()));
-showCards(filtered);
-}
-
-wordInput.addEventListener('input', () => {
-    filterByWord(wordInput.value); 
-});
-
+        showCards(filteredByWord);
+    }
+    
 });
 
 
